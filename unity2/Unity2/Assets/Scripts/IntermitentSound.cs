@@ -104,95 +104,95 @@ public class IntermitentSound : MonoBehaviour
         //    if (Input.GetKeyDown(KeyCode.Alpha2)) StopSound();
     }
 
-    IEnumerator traffic()
-    {
-        if (Itraffic < 0.2)
-        {
-            foreach (AudioSource source in passing_speaker)
-            {
-                if (source.isPlaying)
-                    source.Stop();
-            }
+    // IEnumerator traffic()
+    // {
+    //     if (Itraffic < 0.2)
+    //     {
+    //         foreach (AudioSource source in passing_speaker)
+    //         {
+    //             if (source.isPlaying)
+    //                 source.Stop();
+    //         }
 
-            foreach (AudioSource source in train_speaker)
-            {
-                if (source.isPlaying)
-                    source.Stop();
-            }
-        }
-        else // >= 0.2
-        {
-            foreach (AudioSource source in passing_speaker)
-            {
-                if (source.isPlaying)
-                    source.volume += 0.05f;
-            }
+    //         foreach (AudioSource source in train_speaker)
+    //         {
+    //             if (source.isPlaying)
+    //                 source.Stop();
+    //         }
+    //     }
+    //     else // >= 0.2
+    //     {
+    //         foreach (AudioSource source in passing_speaker)
+    //         {
+    //             if (source.isPlaying)
+    //                 source.volume += 0.05f;
+    //         }
 
-            foreach (AudioSource source in train_speaker)
-            {
-                if (source.isPlaying)
-                    source.volume += 0.05f;
-            }
-        }
+    //         foreach (AudioSource source in train_speaker)
+    //         {
+    //             if (source.isPlaying)
+    //                 source.volume += 0.05f;
+    //         }
+    //     }
 
-        if (Itraffic < 0.5)
-        {
-            foreach (AudioSource source in horn_speaker)
-            {
-                if (source.isPlaying)
-                    source.Stop();
-            }
-        }
-        //else //>=0.5
-        //{
+    //     if (Itraffic < 0.5)
+    //     {
+    //         foreach (AudioSource source in horn_speaker)
+    //         {
+    //             if (source.isPlaying)
+    //                 source.Stop();
+    //         }
+    //     }
+    //     //else //>=0.5
+    //     //{
 
-        //}
-    }
+    //     //}
+    // }
 
-    IEnumerator Waitforit()
-    {
-        // tiempo de espera aleatorio en el intervalo [minTime,maxTime]
-        float waitTime = Random.Range(minTime, maxTime);
-        Debug.Log(waitTime);
+    // IEnumerator Waitforit()
+    // {
+    //     // tiempo de espera aleatorio en el intervalo [minTime,maxTime]
+    //     float waitTime = Random.Range(minTime, maxTime);
+    //     Debug.Log(waitTime);
 
-        // miramos si hay un clip asignado al source (sirve para la primera vez q se ejecuta)
-        if (_Speaker01.clip == null)
-            // waitfor seconds suspende la coroutine durante waitTime
-            yield return new WaitForSeconds(waitTime);
+    //     // miramos si hay un clip asignado al source (sirve para la primera vez q se ejecuta)
+    //     if (_Speaker01.clip == null)
+    //         // waitfor seconds suspende la coroutine durante waitTime
+    //         yield return new WaitForSeconds(waitTime);
 
-        // cuando hay clip se añade la long del clip + el tiempo de espera para esperar entre lanzamientos
-        else
-            yield return new WaitForSeconds(_Speaker01.clip.length + waitTime);
+    //     // cuando hay clip se añade la long del clip + el tiempo de espera para esperar entre lanzamientos
+    //     else
+    //         yield return new WaitForSeconds(_Speaker01.clip.length + waitTime);
 
-        // si esta activado reproducimos sonido
-        if (enablePlayMode) PlaySound();
-    }
+    //     // si esta activado reproducimos sonido
+    //     if (enablePlayMode) PlaySound();
+    // }
 
-    void PlaySound()
-    {
-        SetSourceProperties(pcmData[Random.Range(0, pcmData.Length)], minVol, maxVol, distRand, maxDist, spatialBlend);
-        _Speaker01.Play();
-        Debug.Log("back in it");
-        StartCoroutine("Waitforit");
-    }
-
-
-
-    public void SetSourceProperties(AudioSource audioSource, AudioClip audioData, float SpatialBlend, float volume)
-    {
-        audioSource.loop = false;
-        audioSource.spatialBlend = spatialBlend;
-        audioSource.clip = audioData;
-        audioSource.volume = volume;
-    }
+    // void PlaySound()
+    // {
+    //     SetSourceProperties(pcmData[Random.Range(0, pcmData.Length)], minVol, maxVol, distRand, maxDist, spatialBlend);
+    //     _Speaker01.Play();
+    //     Debug.Log("back in it");
+    //     StartCoroutine("Waitforit");
+    // }
 
 
 
+    // public void SetSourceProperties(AudioSource audioSource, AudioClip audioData, float SpatialBlend, float volume)
+    // {
+    //     audioSource.loop = false;
+    //     audioSource.spatialBlend = spatialBlend;
+    //     audioSource.clip = audioData;
+    //     audioSource.volume = volume;
+    // }
 
-    void StopSound()
-    {
-        enablePlayMode = false;
-        Debug.Log("stop");
-    }
+
+
+
+    // void StopSound()
+    // {
+    //     enablePlayMode = false;
+    //     Debug.Log("stop");
+    // }
 }
 
