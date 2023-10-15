@@ -143,10 +143,10 @@ public class IntermitentSound : MonoBehaviour
                     source.Stop();
             }
         }
-        else //>=0.5
-        {
+        //else //>=0.5
+        //{
 
-        }
+        //}
     }
 
     IEnumerator Waitforit()
