@@ -4,39 +4,50 @@ using UnityEngine;
 
 public class Ambient : MonoBehaviour
 {
+    //intensidad del trafico y del ruido de fondo (chatter)
     [SerializeField]
     [Range(0.0f, 1.0f)]
     private float ITraffic = 0.1f, IChatter = 0.1f;
 
+    //mixers
     private Mixer passing, train, horn, siren, chatter;
 
+    //intervalo de tiempo entre sonidos
     [SerializeField]
-    private float minTime = 1f, maxTime = 3f;
+    private float minTime = 2f, maxTime = 4f;
 
+    //volumen de los sonidos
     [SerializeField]
     public float minVol = 0.1f, maxVol = 0.7f;
 
+    //numero maximo de instancias de canales (audio sources)
     [SerializeField]
-    private int maxInstancesPerMixer = 8;
+    private int maxInstancesPerMixer = 3;
 
+    //clips a mezclar
     [SerializeField]
     private AudioClip[] passingClips, trainClips, hornClips, sirenClips, chatterClips;
 
+    //canales de los pads
     private AudioSource traffic_pad, chatter_pad;
 
+    //clips de los pads
     [SerializeField]
     private AudioClip traffic_pad_clip, chatter_pad_clip;
 
+    //multiplicadores de probabilidad y volumen a medida que aumenta / disminuye la intensidad
     [SerializeField]
     private float probabilityMultiplier = 0.05f, volumeMultiplier = 0.1f;
     void Awake()
     {
+        //inicializamos los mixers
         passing = SetMixer(passingClips, ITraffic);
         train = SetMixer(trainClips, ITraffic);
         horn = SetMixer(hornClips, ITraffic);
         siren = SetMixer(sirenClips, ITraffic);
         chatter = SetMixer(chatterClips, IChatter);
 
+        //inicializamos los pads
         traffic_pad = gameObject.AddComponent<AudioSource>();
         traffic_pad.playOnAwake = true;
         traffic_pad.loop = true;
@@ -59,11 +70,11 @@ public class Ambient : MonoBehaviour
         Traffic();
 
         Chatter();
-
     }
 
     private void Chatter()
     {
+        //volumen del pad
         chatter_pad.volume = IChatter;
 
         if (IChatter < 0.5)
@@ -71,7 +82,7 @@ public class Ambient : MonoBehaviour
 
         else //>=0.5
         {
-            //aumenta el volumen y la proobabilidad de que suene
+            //aumenta/disminuye el volumen y la proobabilidad de que suene
             chatter.minVol = Mathf.Clamp(minVol + IChatter * volumeMultiplier, 0.0f, 1.0f);
             chatter.maxVol = Mathf.Clamp(maxVol + IChatter * volumeMultiplier, 0.0f, 1.0f);
             chatter.minTime = minTime - IChatter * probabilityMultiplier;
@@ -84,6 +95,7 @@ public class Ambient : MonoBehaviour
 
     private void Traffic()
     {
+        //volumen del pad
         traffic_pad.volume = ITraffic;
 
         if (ITraffic < 0.2)
@@ -95,7 +107,7 @@ public class Ambient : MonoBehaviour
         }
         else // >= 0.2
         {
-            //aumenta volumen y probabilidad de que suenen
+            //aumenta/disminuye volumen y probabilidad de que suenen
             passing.minVol = Mathf.Clamp(minVol + ITraffic * volumeMultiplier, 0.0f, 1.0f);
             passing.maxVol = Mathf.Clamp(maxVol + ITraffic * volumeMultiplier, 0.0f, 1.0f);
             passing.minTime = minTime - ITraffic * probabilityMultiplier;
@@ -119,7 +131,7 @@ public class Ambient : MonoBehaviour
         }
         else //>=0.5
         {
-            //aumenta probabilidad de que suenen
+            //aumenta/disminuye probabilidad de que suenen
             horn.minTime = minTime - ITraffic * probabilityMultiplier;
             horn.maxTime = maxTime - ITraffic * probabilityMultiplier;
 
@@ -134,6 +146,7 @@ public class Ambient : MonoBehaviour
 
     private Mixer SetMixer(AudioClip[] clips, float intensity)
     {
+        //inicilizamos el mixer
         Mixer mixer = gameObject.AddComponent<Mixer>();
         mixer.clips = clips;
         mixer.maxInstances = maxInstancesPerMixer;

@@ -1,25 +1,32 @@
-// '1' empieza la reproducción del sonido intermitente
-// '2' lo para
+//Clase mixer para mezclar varias pistas de audio
 
 using System.Collections;
 using UnityEngine;
 public class Mixer : MonoBehaviour
 {
+    //clips a mezclar
     public AudioClip[] clips;
 
+    //numero maximo de instancias de canales (audio sources)
     public int maxInstances = 8;
+
+    //array de canales
     private AudioSource[] sources;
 
-
+    //intervalo de tiempo entre sonidos
     [Range(1f, 3f)]
     public float minTime = 1f, maxTime = 3f;
 
+    //volumen de los sonidos
     [Range(0f, 1f)]
     public float minVol = 0.1f, maxVol = 0.7f;
 
+    //flag para activar/desactivar el modo de reproduccion
     private bool enablePlayMode;
+
     void Start()
     {
+        //inicializamos el array de canales
         sources = new AudioSource[maxInstances];
 
         for (int i = 0; i < maxInstances; i++)
@@ -31,6 +38,7 @@ public class Mixer : MonoBehaviour
         }
     }
 
+    //Esto en caso de que quisieramos activar/desactivar el modo de reproduccion con teclas
     // void Update()
     // {
 
@@ -48,6 +56,7 @@ public class Mixer : MonoBehaviour
 
     // }
 
+    //corutina para reproducir sonidos
     IEnumerator Waitforit()
     {
         // tiempo de espera aleatorio en el intervalo [minTime,maxTime]
