@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{fbcdc17c-8b7b-435d-924f-e008b9bf431e}">
+		<property name="assetPath">
+			<value>motores/1121.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.90245833333333336</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9657067a-2381-4ee2-8bb6-29e105b26f1f}</destination>
+		</relationship>
+	</object>
+</objects>
