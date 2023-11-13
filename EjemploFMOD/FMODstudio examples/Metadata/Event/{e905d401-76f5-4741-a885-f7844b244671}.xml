@@ -186,6 +186,9 @@ Recordings by David at Track Time Audio.</value>
 		<property name="voiceStealing">
 			<value>3</value>
 		</property>
+		<property name="looping">
+			<value>true</value>
+		</property>
 		<relationship name="modulators">
 			<destination>{cf32ad36-a325-4c34-9991-3dd67db3a087}</destination>
 			<destination>{ebe92199-3690-4951-be30-3a03924190ea}</destination>
